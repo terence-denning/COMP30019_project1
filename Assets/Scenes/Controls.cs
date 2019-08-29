@@ -20,8 +20,9 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print("OnTriggerEnter");
-        transform.position = transform.position + -(Camera.main.transform.forward * distance * Time.deltaTime);
+        print(other.ClosestPoint(transform.position));
+        print(transform.position);
+        transform.position += new Vector3(0.0f, 0.5f, 0.0f);
     }
 
  
@@ -76,19 +77,19 @@ public class Controls : MonoBehaviour
 
         if ( xPos > 10)
         {
-            transform.position += new Vector3(-0.1f, 0, 0);
+            transform.position += new Vector3(-1.0f, 0, 0);
         }
         if (xPos < -10)
         {
-            transform.position += new Vector3(0.1f, 0, 0);
+            transform.position += new Vector3(1.0f, 0, 0);
         }
         if (zPos > 10)
         {
-            transform.position += new Vector3(0, 0, -0.1f);
+            transform.position += new Vector3(0, 0, -1.0f);
         }
         if (zPos < -10)
         {
-            transform.position += new Vector3(0, 0, 0.1f);
+            transform.position += new Vector3(0, 0, 1.0f);
         }
     }
 }
