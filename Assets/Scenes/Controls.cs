@@ -18,23 +18,13 @@ public class Controls : MonoBehaviour
     private float y;
     private Vector3 rotateValue;
 
-    void OnCollisionEnter(Collision other)
-    {
-        print("OnCollisionEnter");
-    }
-
     void OnTriggerEnter(Collider other)
     {
         print("OnTriggerEnter");
+        transform.position = transform.position + -(Camera.main.transform.forward * distance * Time.deltaTime);
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
-
-    {
-
-        print("OnControllerColliderHit");
-
-    }
+ 
 
     void Start()
     {

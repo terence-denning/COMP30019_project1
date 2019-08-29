@@ -12,6 +12,7 @@ public class CreateTerrain : MonoBehaviour
 {
 
     Mesh mesh;
+    MeshCollider c;
     Vector3[] vertices;
     Vector2[] uvs;
 
@@ -40,6 +41,10 @@ public class CreateTerrain : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
+         c = GetComponent<MeshCollider>();
+        //collider = gameObject.AddComponent<MeshCollider>();
+        c.convex = true;
+
         for ( int i = 0; i <= dimensions; i++)
         {
             for( int j = 0; j <= dimensions; j++)
@@ -48,7 +53,7 @@ public class CreateTerrain : MonoBehaviour
                 vertices[i * (dimensions+1) + j] = new Vector3( -halfSize+j*divisionSize, 0.0f, halfSize-i*divisionSize );
                 uvs[i * (dimensions+1) + j] = new Vector2((float)i/dimensions, (float)j/dimensions);
 
-                // build squares of terrain
+                // build polygons of terrain
                 if ( i < dimensions && j < dimensions)
                 {
                     int topLeft = i * ( dimensions + 1 ) + j;
@@ -92,6 +97,7 @@ public class CreateTerrain : MonoBehaviour
 
                 for( int k = 0; k < numSquares; k++ )
                 {
+                    // run diamond square algorithm to set y values of each vertice
                     diamondSquare(row, col, squareSize, height);
                     col += squareSize;
                 }
@@ -106,10 +112,12 @@ public class CreateTerrain : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.uv = uvs;
+        
 
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     void diamondSquare(int row, int col, int size, float offset)
