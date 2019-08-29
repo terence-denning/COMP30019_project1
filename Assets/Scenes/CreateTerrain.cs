@@ -16,6 +16,7 @@ public class CreateTerrain : MonoBehaviour
     Vector3[] vertices;
     Vector2[] uvs;
 
+
     public int dimensions;
     public float size;
     public float height;
@@ -23,6 +24,9 @@ public class CreateTerrain : MonoBehaviour
     void Start()
     {
         createShape();
+
+        
+        
     }
 
     void createShape()
@@ -41,8 +45,10 @@ public class CreateTerrain : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-         c = GetComponent<MeshCollider>();
-        //collider = gameObject.AddComponent<MeshCollider>();
+        Material material = new Material(Shader.Find("Unlit/TerrainShader"));
+        GetComponent<Renderer>().material = material;
+
+        c = GetComponent<MeshCollider>();
         c.convex = true;
 
         for ( int i = 0; i <= dimensions; i++)
@@ -108,16 +114,32 @@ public class CreateTerrain : MonoBehaviour
             height *= 0.5f;
         }
 
+
+
+
         // set mesh values
         mesh.vertices = vertices;
+
+        /*
+        mesh.colors = new Color[vertices.Length];
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            mesh.colors[i] = Color.green;
+        }
+        */
+
+
         mesh.triangles = triangles;
         mesh.uv = uvs;
+
         
+
 
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
+        
     }
 
     void diamondSquare(int row, int col, int size, float offset)

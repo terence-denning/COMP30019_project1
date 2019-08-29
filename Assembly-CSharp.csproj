@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scenes\Controls.cs" />
     <Compile Include="Assets\Scenes\CreateTerrain.cs" />
+    <None Include="Assets\Scenes\TerrainShader.shader" />
+    <None Include="Assets\Scenes\TerrainShaderTex.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/teren/Desktop/unity/COMP30019_project1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

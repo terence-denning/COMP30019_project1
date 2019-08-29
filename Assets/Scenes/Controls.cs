@@ -20,8 +20,6 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print(other.ClosestPoint(transform.position));
-        print(transform.position);
         transform.position += new Vector3(0.0f, 0.5f, 0.0f);
     }
 
