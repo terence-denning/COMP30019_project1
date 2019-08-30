@@ -23,13 +23,18 @@ public class CreateTerrain : MonoBehaviour
 
     void Start()
     {
-        createShape();
+        GetComponent<MeshFilter>().mesh = this.createShape();
 
-        
-        
+
+        //Material material = new Material(Shader.Find("Unlit/TerrainShader"));
+        //GetComponent<Renderer>().material = material;
+
+        GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
+        GetComponent<MeshCollider>().convex = true;
+
     }
 
-    void createShape()
+    Mesh createShape()
     {
         float halfSize = size * 0.5f;
         float divisionSize = size / dimensions;
@@ -42,14 +47,7 @@ public class CreateTerrain : MonoBehaviour
 
         int triOffset = 0;
 
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
-
-        Material material = new Material(Shader.Find("Unlit/TerrainShader"));
-        GetComponent<Renderer>().material = material;
-
-        c = GetComponent<MeshCollider>();
-        c.convex = true;
+        mesh = new Mesh();    
 
         for ( int i = 0; i <= dimensions; i++)
         {
@@ -120,26 +118,20 @@ public class CreateTerrain : MonoBehaviour
         // set mesh values
         mesh.vertices = vertices;
 
-        /*
-        mesh.colors = new Color[vertices.Length];
-        for (int i = 0; i < vertices.Length; i++)
+
+        mesh.colors = new Color[mesh.vertices.Length];
+        for (int i = 0; i < mesh.vertices.Length; i++)
         {
             mesh.colors[i] = Color.green;
         }
-        */
 
 
         mesh.triangles = triangles;
         mesh.uv = uvs;
 
-        
-
-
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
-
-        GetComponent<MeshCollider>().sharedMesh = mesh;
-        
+        return mesh;
     }
 
     void diamondSquare(int row, int col, int size, float offset)

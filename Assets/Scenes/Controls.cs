@@ -20,7 +20,7 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        transform.position += new Vector3(0.0f, 0.5f, 0.0f);
+        transform.position += new Vector3(0.0f, 0.4f, 0.0f);
     }
 
  
