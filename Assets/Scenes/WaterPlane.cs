@@ -67,7 +67,8 @@ public class WaterPlane : MonoBehaviour
         MeshFilter mesh = this.gameObject.AddComponent<MeshFilter>();
         mesh.mesh = this.CreateMesh();
         MeshRenderer renderer = this.gameObject.AddComponent<MeshRenderer>();
-       
+        GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
+        GetComponent<MeshCollider>().convex = true;
         renderer.material.shader = this.shader;
         renderer.material.mainTexture = this.tex;
         
