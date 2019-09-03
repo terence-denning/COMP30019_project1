@@ -7,6 +7,7 @@ Shader "Unlit/WaveShader"
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		WaveSpeed ("WaveSpeed", Float) = 2.0
+		WaveReduct("WaveReduct",Float) = 2.0
 	}
 	SubShader
 	{
@@ -22,6 +23,7 @@ Shader "Unlit/WaveShader"
     
 			uniform sampler2D _MainTex;	
 			float WaveSpeed;
+			float WaveReduct;
             
 			struct vertIn
 			{
@@ -40,7 +42,7 @@ Shader "Unlit/WaveShader"
 			vertOut vert(vertIn v)
 			{
 				// Displace the original vertex in model space
-				float4 displacement = float4(0.0f,sin(_Time.y*(WaveSpeed)+v.vertex.x+v.vertex.z), 0.0f, 0.0f);
+				float4 displacement = float4(0.0f,sin(_Time.y*(WaveSpeed)+v.vertex.x+v.vertex.z)/WaveReduct, 0.0f, 0.0f);
 				float2 uvdisplacement = float2(cos(_Time.y + v.uv.x)*0.1, sin(_Time.y+v.uv.y)*0.1);
 				vertOut o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);

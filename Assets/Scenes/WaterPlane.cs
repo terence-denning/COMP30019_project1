@@ -23,12 +23,16 @@ public class WaterPlane : MonoBehaviour
         //tangent;
         Vector4[] tangents = new Vector4[vertices.Length];
         Vector4 tangent = new Vector4(1f, 0f, 0f, -1f);
+
+        int offsetX = xSize / 2;
+        int offsetZ = zSize / 2;
+
         //Define Vertex;
         for (int y = 0; y <= zSize; y++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                vertices[i] = new Vector3(x,0, y);
+                vertices[i] = new Vector3(x-offsetX,0, y-offsetZ);
                 uv[i] = new Vector2((float)x / xSize,(float) y / zSize);
                 tangents[i] = tangent;
                 i++;
