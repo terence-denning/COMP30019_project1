@@ -46,4 +46,3 @@ Shader "Unlit/TerrainShader"
 		}
 	}
 }
-

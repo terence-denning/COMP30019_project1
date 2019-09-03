@@ -15,6 +15,7 @@ public class CreateTerrain : MonoBehaviour
     MeshCollider c;
     Vector3[] vertices;
     Vector2[] uvs;
+    Color[] colors;
 
 
     public int dimensions;
@@ -26,8 +27,8 @@ public class CreateTerrain : MonoBehaviour
         GetComponent<MeshFilter>().mesh = this.createShape();
 
 
-        //Material material = new Material(Shader.Find("Unlit/TerrainShader"));
-        //GetComponent<Renderer>().material = material;
+        Material material = new Material(Shader.Find("Unlit/TerrainShader"));
+        GetComponent<Renderer>().material = material;
 
         GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
         GetComponent<MeshCollider>().convex = true;
@@ -42,6 +43,7 @@ public class CreateTerrain : MonoBehaviour
 
         vertices = new Vector3[ numVertices ];
         uvs = new Vector2[numVertices];
+        colors = new Color[numVertices];
 
         int[] triangles = new int[ dimensions * dimensions * 6 ];
 
@@ -56,6 +58,7 @@ public class CreateTerrain : MonoBehaviour
 
                 vertices[i * (dimensions+1) + j] = new Vector3( -halfSize+j*divisionSize, 0.0f, halfSize-i*divisionSize );
                 uvs[i * (dimensions+1) + j] = new Vector2((float)i/dimensions, (float)j/dimensions);
+                //colors[i * (dimensions+1) + j] = Color.red;
 
                 // build polygons of terrain
                 if ( i < dimensions && j < dimensions)
@@ -112,20 +115,9 @@ public class CreateTerrain : MonoBehaviour
             height *= 0.5f;
         }
 
-
-
-
         // set mesh values
         mesh.vertices = vertices;
-
-
-        mesh.colors = new Color[mesh.vertices.Length];
-        for (int i = 0; i < mesh.vertices.Length; i++)
-        {
-            mesh.colors[i] = Color.green;
-        }
-
-
+        mesh.colors = colors;
         mesh.triangles = triangles;
         mesh.uv = uvs;
 
@@ -151,7 +143,23 @@ public class CreateTerrain : MonoBehaviour
         vertices[midPoint + halfSize].y = (vertices[topLeft+size].y + vertices[bottomLeft+size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
         vertices[bottomLeft + halfSize].y = (vertices[bottomLeft].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
 
+        // set color of vertice
+        colors[topLeft + halfSize] = setColor(vertices[topLeft + halfSize].y, height);
+        colors[midPoint - halfSize] = setColor(vertices[midPoint - halfSize].y, height);
+        colors[midPoint + halfSize] = setColor(vertices[midPoint + halfSize].y, height);
+        colors[bottomLeft + halfSize] = setColor(vertices[bottomLeft + halfSize].y, height);
+        colors[midPoint] = setColor(vertices[midPoint].y, height / 2);
+
+
+
     }
 
-   
+    Color setColor(float height, float cutOff)
+    {
+        if( height > (8*cutOff)/9)
+        {
+            return Color.white;
+        }
+        return Color.green;
+    }
 }
