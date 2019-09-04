@@ -10,6 +10,7 @@ public class WaterPlane : MonoBehaviour
     private Mesh mesh;
     public Texture tex;
     public float wavespeed;
+    public float wavereduct =2 ;
     Mesh  CreateMesh()
     {
         GetComponent<MeshFilter>().mesh = mesh;
@@ -80,8 +81,8 @@ public class WaterPlane : MonoBehaviour
     {
         MeshRenderer r = this.gameObject.GetComponent<MeshRenderer>();
         MeshFilter m = this.gameObject.GetComponent<MeshFilter>();
-        Shader.SetGlobalFloat("WaveSpeed",this.wavespeed);
-       
+        r.material.SetFloat("WaveSpeed",this.wavespeed);
+        r.material.SetFloat("WaveReduct",wavereduct);
 
     }
 }

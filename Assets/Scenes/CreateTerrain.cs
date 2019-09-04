@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 /*
@@ -21,7 +23,8 @@ public class CreateTerrain : MonoBehaviour
     public int dimensions;
     public float size;
     public float height;
-
+    public float colorIndex=5;
+    
     void Start()
     {
         GetComponent<MeshFilter>().mesh = this.createShape();
@@ -33,6 +36,11 @@ public class CreateTerrain : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
         GetComponent<MeshCollider>().convex = true;
 
+    }
+
+    private void Update()
+    {
+       this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
     }
 
     Mesh createShape()
@@ -156,10 +164,12 @@ public class CreateTerrain : MonoBehaviour
 
     Color setColor(float height, float cutOff)
     {
+        Color co = new Color(0f,0.7f,0f,1f);
         if( height > (8*cutOff)/9)
         {
-            return Color.white;
+            
+            return co;
         }
-        return Color.green;
+        return co;
     }
 }

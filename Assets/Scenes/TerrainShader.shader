@@ -2,6 +2,10 @@
 
 Shader "Unlit/TerrainShader"
 {
+Properties
+	{
+		ColorIndex("ColorIndex",float) = 4.0
+	}
 	SubShader
 	{
 		Pass
@@ -11,7 +15,9 @@ Shader "Unlit/TerrainShader"
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-
+			float ColorIndex = 3;
+            
+           
 			struct vertIn
 			{
 				float4 vertex : POSITION;
@@ -25,15 +31,23 @@ Shader "Unlit/TerrainShader"
 				float4 color : COLOR;
 
 			};
-
+            
 			// Implementation of the vertex shader
 			vertOut vert(vertIn v)
 			{
 				vertOut o;
-				v.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-
-				o.vertex = v.vertex;
-				o.color = v.color;
+				if( v.vertex.y > 0){
+                    v.color.r = (v.vertex.y/ColorIndex);
+                    v.color.b = (v.vertex.y/ColorIndex);
+                    if(v.color.r > 0.7 || v.color. b > 0.7){
+                     v.color.g = (v.vertex.y/ColorIndex);
+                    }
+                   
+				
+				}
+			v.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.vertex = v.vertex;
+               o.color = v.color;
 				return o;
 			}
 
