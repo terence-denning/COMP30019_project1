@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class WaterPlane : MonoBehaviour
 {
     public Shader shader;
+    //public Shader phoneshader;
+    //public PointLight pointLight;
+
+
     public int xSize, zSize;
     private Vector3[] vertices;
     private Mesh mesh;
@@ -71,6 +75,10 @@ public class WaterPlane : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
         GetComponent<MeshCollider>().convex = true;
         renderer.material.shader = this.shader;
+
+        //renderer.material.SetColor("_PointLightColor", this.pointLight.color);
+        //renderer.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
+
         renderer.material.mainTexture = this.tex;
         
 

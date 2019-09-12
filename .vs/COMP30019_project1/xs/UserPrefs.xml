@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{537AD18D-4F2C-5CC9-CF0F-E649FBAA7198}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Uni/Graphics and Interaction/Lab/Lab2/Assets/XAxisSpin.cs">
+    <Files>
+      <File FileName="Assets/Scenes/PhoneShader.shader" Line="30" Column="23" />
+      <File FileName="Assets/Scenes/WaveShader.shader" Line="32" Column="48" />
+      <File FileName="../Uni/Graphics and Interaction/Lab/Lab2/Assets/XAxisSpin.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scenes/PointLight.cs" Line="13" Column="2" />
+      <File FileName="Assets/Scenes/WaterPlane.cs" Line="9" Column="36" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bd124de6-4b96-4279-9d9f-188b2f69d76a" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

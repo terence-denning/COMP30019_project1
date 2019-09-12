@@ -3,7 +3,11 @@ guid: 7c9015ae3b0f076418abe8da42756227
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - shader: {instanceID: 0}
+  - phoneshader: {instanceID: 0}
+  - pointLight: {instanceID: 0}
+  - tex: {fileID: 2800000, guid: 18bfc8fdd0ac48541b960c57fff085d9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

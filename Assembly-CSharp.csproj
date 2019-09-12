@@ -67,10 +67,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scenes\Controls.cs" />
     <Compile Include="Assets\Scenes\CreateTerrain.cs" />
+    <Compile Include="Assets\Scenes\PointLight.cs" />
     <Compile Include="Assets\Scenes\SunRotation.cs" />
     <Compile Include="Assets\Scenes\WaterPlane.cs" />
     <None Include="Assets\Scenes\TerrainShader.shader" />
     <None Include="Assets\Scenes\WaveShader.shader" />
+    <None Include="Assets\Scenes\PhoneShader.shader" />
     <None Include="Assets\Scenes\TerrainShaderTex.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/ricky/Desktop/COMP30019_project1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
