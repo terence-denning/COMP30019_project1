@@ -6,13 +6,13 @@ public class WaterPlane : MonoBehaviour
 {
     public Shader shader;
     //public Shader phoneshader;
-    //public PointLight pointLight;
+    public PointLight pointLight;
 
 
     public int xSize, zSize;
     private Vector3[] vertices;
     private Mesh mesh;
-    public Texture tex;
+    //public Texture tex;
     public float wavespeed;
     public float wavereduct =2 ;
     Mesh  CreateMesh()
@@ -24,11 +24,11 @@ public class WaterPlane : MonoBehaviour
         //Size of Plane;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
         //Define UV;
-        Vector2[] uv = new Vector2[vertices.Length];
+       // Vector2[] uv = new Vector2[vertices.Length];
         //tangent;
         Vector4[] tangents = new Vector4[vertices.Length];
         Vector4 tangent = new Vector4(1f, 0f, 0f, -1f);
-
+        Color[] colors = new Color[vertices.Length];
         int offsetX = xSize / 2;
         int offsetZ = zSize / 2;
 
@@ -38,12 +38,19 @@ public class WaterPlane : MonoBehaviour
             for (int x = 0; x <= xSize; x++)
             {
                 vertices[i] = new Vector3(x-offsetX,0, y-offsetZ);
-                uv[i] = new Vector2((float)x / xSize,(float) y / zSize);
+               // uv[i] = new Vector2((float)x / xSize,(float) y / zSize);
                 tangents[i] = tangent;
                 i++;
             }
         }
         mesh.vertices = vertices;
+
+        for (int k = 0; k < vertices.Length; k++)
+        {
+            colors[k] = new Color(0.5f,0.8f,0.97f,0.7f);
+        }
+
+        mesh.colors = colors;
         //Define Triangle;
 
         int[] triangles = new int[xSize * zSize* 6];
@@ -61,7 +68,7 @@ public class WaterPlane : MonoBehaviour
         }
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-        mesh.uv = uv;
+       // mesh.uv = uv;
         mesh.tangents = tangents;
         
         return mesh;
@@ -76,10 +83,9 @@ public class WaterPlane : MonoBehaviour
         GetComponent<MeshCollider>().convex = true;
         renderer.material.shader = this.shader;
 
-        //renderer.material.SetColor("_PointLightColor", this.pointLight.color);
-        //renderer.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
+       
 
-        renderer.material.mainTexture = this.tex;
+        //renderer.material.mainTexture = this.tex;
         
 
     }
@@ -91,6 +97,8 @@ public class WaterPlane : MonoBehaviour
         MeshFilter m = this.gameObject.GetComponent<MeshFilter>();
         r.material.SetFloat("WaveSpeed",this.wavespeed);
         r.material.SetFloat("WaveReduct",wavereduct);
+        r.material.SetColor("_PointLightColor", this.pointLight.color);
+        r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
 
     }
 }

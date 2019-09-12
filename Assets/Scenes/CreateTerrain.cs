@@ -18,11 +18,13 @@ public class CreateTerrain : MonoBehaviour
     Vector3[] vertices;
     Vector2[] uvs;
     Color[] colors;
+    
 
-
+    public PointLight pointLight;
     public int dimensions;
     public float size;
     public float height;
+    [Range(1,10)]
     public float colorIndex=5;
     
     void Start()
@@ -40,7 +42,11 @@ public class CreateTerrain : MonoBehaviour
 
     private void Update()
     {
+        MeshRenderer r = this.gameObject.GetComponent<MeshRenderer>();
+        MeshFilter m = this.gameObject.GetComponent<MeshFilter>();
        this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
+       r.material.SetColor("_PointLightColor", this.pointLight.color);
+       r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
     }
 
     Mesh createShape()
@@ -164,12 +170,7 @@ public class CreateTerrain : MonoBehaviour
 
     Color setColor(float height, float cutOff)
     {
-        Color co = new Color(0f,0.7f,0f,1f);
-        if( height > (8*cutOff)/9)
-        {
-            
-            return co;
-        }
+        Color co = new Color(0f, 0.7f, 0f, 1f);
         return co;
     }
 }
