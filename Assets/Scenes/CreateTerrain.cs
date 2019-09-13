@@ -36,7 +36,6 @@ public class CreateTerrain : MonoBehaviour
     {
         GetComponent<MeshFilter>().mesh = this.createShape();
 
-
         Material material = new Material(Shader.Find("Unlit/TerrainShader"));
         GetComponent<Renderer>().material = material;
 
@@ -49,9 +48,9 @@ public class CreateTerrain : MonoBehaviour
     {
         MeshRenderer r = this.gameObject.GetComponent<MeshRenderer>();
         MeshFilter m = this.gameObject.GetComponent<MeshFilter>();
-       this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
-       r.material.SetColor("_PointLightColor", this.pointLight.color);
-       r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
+        this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
+        r.material.SetColor("_PointLightColor", this.pointLight.color);
+        r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
     }
 
     Mesh createShape()
@@ -77,8 +76,7 @@ public class CreateTerrain : MonoBehaviour
 
                 vertices[i * (dimensions+1) + j] = new Vector3( -halfSize+j*divisionSize, 0.0f, halfSize-i*divisionSize );
                 uvs[i * (dimensions+1) + j] = new Vector2((float)i/dimensions, (float)j/dimensions);
-                //colors[i * (dimensions+1) + j] = Color.red;
-
+      
                 // build polygons of terrain
                 if ( i < dimensions && j < dimensions)
                 {
@@ -151,9 +149,6 @@ public class CreateTerrain : MonoBehaviour
         int topLeft = row * (dimensions + 1) + col;
         int bottomLeft = ( row + size ) * ( dimensions + 1 ) + col;
 
-       
-
-
         // diamond part
         int midPoint = (int)(row + halfSize) * (dimensions + 1) + (int)(col + halfSize);
    
@@ -161,11 +156,13 @@ public class CreateTerrain : MonoBehaviour
 
         vertices[midPoint].y = midPointY;
 
+        // y values of midpoint of each side of square
         float topY = (vertices[topLeft].y + vertices[topLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
         float leftY = (vertices[topLeft].y + vertices[bottomLeft].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
         float rightY = (vertices[topLeft + size].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
         float bottomY = (vertices[bottomLeft].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
 
+        // set the mid y point of the terrain so water and sun can be set correctly
         float[] vals = { midPointY, topY, leftY, rightY, bottomY };
         float largestVal = vals.Max();
         float smallestVal = vals.Min();

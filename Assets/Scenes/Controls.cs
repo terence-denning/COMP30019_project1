@@ -23,8 +23,6 @@ public class Controls : MonoBehaviour
         transform.position += new Vector3(0.0f, 0.4f, 0.0f);
     }
 
- 
-
     void Start()
     {
         size = GameObject.Find("Terrain").GetComponent<CreateTerrain>().size;
@@ -63,9 +61,14 @@ public class Controls : MonoBehaviour
         // mouse controls yaw and pitch of camera
         y = Input.GetAxis("Mouse X");
         x = Input.GetAxis("Mouse Y");
-        rotateValue = new Vector3(x * 5, y * -5, 0);
-        transform.eulerAngles = transform.eulerAngles - rotateValue;
 
+        
+        rotateValue = new Vector3(x * 5, y * -5, 0);
+        //transform.eulerAngles = transform.eulerAngles - rotateValue;
+        // dont fully understand if this has solved the gimble lock situation but it avoids the camera flipping
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x - x*2, transform.eulerAngles.y + y*2, 0);
+
+ 
     }
 
     void moveBackIntoGame()
