@@ -63,8 +63,6 @@ public class Controls : MonoBehaviour
         x = Input.GetAxis("Mouse Y");
 
         
-        rotateValue = new Vector3(x * 5, y * -5, 0);
-        //transform.eulerAngles = transform.eulerAngles - rotateValue;
         // dont fully understand if this has solved the gimble lock situation but it avoids the camera flipping
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x - x*2, transform.eulerAngles.y + y*2, 0);
 

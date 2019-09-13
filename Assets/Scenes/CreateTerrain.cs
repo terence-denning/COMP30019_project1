@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 
 /*
- * Code closely follows the tutorial by Ather Omar found at:
+ * Code references the tutorial by Ather Omar found at:
  * https://www.youtube.com/watch?v=1HV8GbFnCik&t=539s
  */
 
