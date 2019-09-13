@@ -4,7 +4,7 @@ Shader "Unlit/TerrainShader"
 {
 Properties
 	{
-		ColorIndex("ColorIndex",float) = 4.0
+		ColorIndex("ColorIndex",float) = 8.0
 		_PointLightColor("Point Light Color", Color) = (0, 0, 0)
 		_PointLightPosition("Point Light Position", Vector) = (0.0, 0.0, 0.0)
 	}
@@ -67,7 +67,7 @@ Properties
 				float3 interpNormal = normalize(v.worldNormal);
 
 				// Calculate ambient RGB intensities
-				float Ka = 1.5;
+				float Ka = 1;
 				float3 amb = v.color.rgb * UNITY_LIGHTMODEL_AMBIENT.rgb * Ka;
 
 				// Calculate diffuse RBG reflections, we save the results of L.N because we will use it again
@@ -86,7 +86,7 @@ Properties
 				//float3 R = normalize((2.0 * LdotN * interpNormal) - L);
 				//float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(V, R)), specN);
 				// Using Blinn-Phong approximation:
-				specN = 30; // We usually need a higher specular power when using Blinn-Phong
+				specN = 0.5; // We usually need a higher specular power when using Blinn-Phong
 				float3 H = normalize(V + L);
 				float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(interpNormal, H)), specN);
 

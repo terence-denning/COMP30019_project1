@@ -7,7 +7,7 @@ public class WaterPlane : MonoBehaviour
     public Shader shader;
     //public Shader phoneshader;
     public PointLight pointLight;
-
+    public float yloc;
 
     public int xSize, zSize;
     private Vector3[] vertices;
@@ -99,6 +99,8 @@ public class WaterPlane : MonoBehaviour
         r.material.SetFloat("WaveReduct",wavereduct);
         r.material.SetColor("_PointLightColor", this.pointLight.color);
         r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
+        yloc = GameObject.Find("Terrain").GetComponent<CreateTerrain>().averageHeight;
+        r.transform.position= new Vector3(0,yloc,0);
 
     }
 }
