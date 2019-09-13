@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,6 +27,10 @@ public class CreateTerrain : MonoBehaviour
     public float height;
     [Range(1,10)]
     public float colorIndex=5;
+
+    private float highestY = 0;
+    private float lowestY = 0;
+    private float averageHeight = 0;
     
     void Start()
     {
@@ -146,16 +151,41 @@ public class CreateTerrain : MonoBehaviour
         int topLeft = row * (dimensions + 1) + col;
         int bottomLeft = ( row + size ) * ( dimensions + 1 ) + col;
 
+       
+
+
         // diamond part
         int midPoint = (int)(row + halfSize) * (dimensions + 1) + (int)(col + halfSize);
-        vertices[midPoint].y = (vertices[topLeft].y + vertices[topLeft + size].y + vertices[bottomLeft].y + vertices[bottomLeft + size].y)*0.25f + Random.Range(-offset, offset);
+   
+        float midPointY = (vertices[topLeft].y + vertices[topLeft + size].y + vertices[bottomLeft].y + vertices[bottomLeft + size].y) / 4 + Random.Range(-offset, offset);
 
+        vertices[midPoint].y = midPointY;
+
+        float topY = (vertices[topLeft].y + vertices[topLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
+        float leftY = (vertices[topLeft].y + vertices[bottomLeft].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
+        float rightY = (vertices[topLeft + size].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
+        float bottomY = (vertices[bottomLeft].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
+
+        float[] vals = { midPointY, topY, leftY, rightY, bottomY };
+        float largestVal = vals.Max();
+        float smallestVal = vals.Min();
+
+        if( largestVal > highestY)
+        {
+            highestY = largestVal;
+        }
+        if( smallestVal < lowestY)
+        {
+            lowestY = smallestVal;
+        }
+
+        averageHeight = (highestY + lowestY) / 2;
 
         // square part
-        vertices[topLeft + halfSize].y = (vertices[topLeft].y + vertices[topLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
-        vertices[midPoint - halfSize].y = (vertices[topLeft].y + vertices[bottomLeft].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
-        vertices[midPoint + halfSize].y = (vertices[topLeft+size].y + vertices[bottomLeft+size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
-        vertices[bottomLeft + halfSize].y = (vertices[bottomLeft].y + vertices[bottomLeft + size].y + vertices[midPoint].y) / 3 + Random.Range(-offset, offset);
+        vertices[topLeft + halfSize].y = topY;
+        vertices[midPoint - halfSize].y = leftY;
+        vertices[midPoint + halfSize].y = rightY;
+        vertices[bottomLeft + halfSize].y = bottomY;
 
         // set color of vertice
         colors[topLeft + halfSize] = setColor(vertices[topLeft + halfSize].y, height);

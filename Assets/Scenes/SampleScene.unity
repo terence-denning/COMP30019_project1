@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587271, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -399,8 +399,8 @@ MonoBehaviour:
   pointLight: {fileID: 2029344274}
   dimensions: 128
   size: 20
-  height: 10
-  colorIndex: 5
+  height: 8
+  colorIndex: 7.04
 --- !u!64 &1160246824
 MeshCollider:
   m_ObjectHideFlags: 0
