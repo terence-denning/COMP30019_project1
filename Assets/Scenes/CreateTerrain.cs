@@ -30,7 +30,7 @@ public class CreateTerrain : MonoBehaviour
 
     private float highestY = 0;
     private float lowestY = 0;
-    private float averageHeight = 0;
+    public float averageHeight = 0;
     
     void Start()
     {

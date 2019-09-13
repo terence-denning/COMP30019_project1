@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\Mike Yu\.Rider2019.2\system\extResources" t="IncludeRecursive" />
@@ -9,6 +9,9 @@
         <e p="Scenes" t="Include">
           <e p="Controls.cs" t="Include" />
           <e p="CreateTerrain.cs" t="Include" />
+          <e p="PhoneShader.shader" t="Include" />
+          <e p="PointLight.cs" t="Include" />
+          <e p="SunRotation.cs" t="Include" />
           <e p="TerrainShader.shader" t="Include" />
           <e p="TerrainShaderTex.shader" t="Include" />
           <e p="WaterPlane.cs" t="Include" />
