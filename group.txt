@@ -1,3 +1,10 @@
 Ruiqi Dong 872975
+
+
 Pengyang Yu 767573
+
+
 Terence Denning 837599
+- terrain generation
+- collision detection
+- camera movement
