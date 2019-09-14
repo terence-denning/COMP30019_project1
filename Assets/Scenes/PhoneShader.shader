@@ -9,6 +9,8 @@ Shader "Unlit/PhongShader"
     {
         _PointLightColor("Point Light Color", Color) = (0, 0, 0)
         _PointLightPosition("Point Light Position", Vector) = (0.0, 0.0, 0.0)
+        _lightact("Light activation",float) = 1
+        
     }
     SubShader
     {
@@ -22,7 +24,7 @@ Shader "Unlit/PhongShader"
 
             uniform float3 _PointLightColor;
             uniform float3 _PointLightPosition;
-
+            uniform float _lightact;
             struct vertIn
             {
                 float4 vertex : POSITION;
@@ -96,8 +98,7 @@ Shader "Unlit/PhongShader"
                 float4 returnColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
                 returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
                 returnColor.a = v.color.a;
-
-                return returnColor;
+              
             }
             ENDCG
         }

@@ -101,6 +101,7 @@ public class WaterPlane : MonoBehaviour
         r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
         yloc = GameObject.Find("Terrain").GetComponent<CreateTerrain>().averageHeight;
         r.transform.position= new Vector3(0,yloc,0);
+        
 
     }
 }

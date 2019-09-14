@@ -20,7 +20,7 @@ public class CreateTerrain : MonoBehaviour
     Vector2[] uvs;
     Color[] colors;
     
-
+    public float averageHeight = 0;
     public PointLight pointLight;
     public int dimensions;
     public float size;
@@ -28,9 +28,10 @@ public class CreateTerrain : MonoBehaviour
     [Range(1,10)]
     public float colorIndex=5;
 
+    private float lightact;
     private float highestY = 0;
     private float lowestY = 0;
-    public float averageHeight = 0;
+    
     
     void Start()
     {
@@ -51,6 +52,8 @@ public class CreateTerrain : MonoBehaviour
         this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
         r.material.SetColor("_PointLightColor", this.pointLight.color);
         r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
+        lightact = GameObject.Find("Sun").GetComponent<SunRotation>().lightactive;
+        r.material.SetFloat("_lightact", lightact);
     }
 
     Mesh createShape()

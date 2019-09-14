@@ -30,4 +30,11 @@ automatically push the user back into the game field.
 
 Surface Properties
 
+The water is build using Displacement mapping by controlling the movement of the vertices. Random salts are added into the formula to
+ show some randomness of the water wave. Properties such as wave speed wave height can be adjusted to have performance ideally.
 
+The Light is using PhongShader to achieve realistic light reflection, as the sun rotates it will show different reflect from the landscape
+and the water. 
+The speed of the sun can adjust using time multiplier. The Light will follow Sunrise Sunset time to perform individual behaviour.
+
+By adjusting the diffuse reflection and specular reflection according to the light factor from the sun rotation pass to the shader.

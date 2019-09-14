@@ -7,6 +7,7 @@ Properties
 		ColorIndex("ColorIndex",float) = 8.0
 		_PointLightColor("Point Light Color", Color) = (0, 0, 0)
 		_PointLightPosition("Point Light Position", Vector) = (0.0, 0.0, 0.0)
+		_lightact("Light activation",float) = 1
 	}
 	SubShader
 	{
@@ -20,7 +21,7 @@ Properties
 			float ColorIndex = 3;
 			uniform float3 _PointLightColor;
 			uniform float3 _PointLightPosition;
-            
+            uniform float _lightact;
            
 			struct vertIn
 			{
@@ -72,30 +73,38 @@ Properties
 
 				// Calculate diffuse RBG reflections, we save the results of L.N because we will use it again
 				// (when calculating the reflected ray in our specular component)
-				float fAtt = 0.5;
-				float Kd = 0.5;
+				float fAtt = _lightact;
+				float Kd = _lightact;
 				float3 L = normalize(_PointLightPosition - v.worldVertex.xyz);
 				float LdotN = dot(L, interpNormal);
 				float3 dif = fAtt * _PointLightColor.rgb * Kd * v.color.rgb * saturate(LdotN);
 
 				// Calculate specular reflections
-				float Ks = 1;
-				float specN = 5; // Values>>1 give tighter highlights
+				float Ks = _lightact /10;
+				float specN; // Values>>1 give tighter highlights
 				float3 V = normalize(_WorldSpaceCameraPos - v.worldVertex.xyz);
 				// Using classic reflection calculation:
-				//float3 R = normalize((2.0 * LdotN * interpNormal) - L);
-				//float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(V, R)), specN);
+				float3 R = normalize((2.0 * LdotN * interpNormal) - L);
+				specN = 0.0001;
+				float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(V, R)), specN);
 				// Using Blinn-Phong approximation:
-				specN = 0.5; // We usually need a higher specular power when using Blinn-Phong
-				float3 H = normalize(V + L);
-				float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(interpNormal, H)), specN);
-
+				//specN = 1; // We usually need a higher specular power when using Blinn-Phong
+				//float3 H = normalize(V + L);
+				//float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(interpNormal, H)), specN);
 				// Combine Phong illumination model components
-				float4 returnColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
-				returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
-				returnColor.a = v.color.a;
-
-				return returnColor;
+				float4 sunriseColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+				float4 sunsetColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+				//remove the specular reflection as we donot want any shinness;
+				sunriseColor.rgb = amb.rgb + dif.rgb + spe.rgb;
+				sunsetColor.rgb = amb.rgb + dif.rgb + spe.rgb  ;
+				//when the sun is down turn off the light;
+				sunriseColor.a = v.color.a;
+				sunsetColor.a = v.color.a;
+                if(_lightact > 0 ){
+                    return sunriseColor;
+                }else{
+                    return sunsetColor;
+                }
 			}
 			ENDCG
 		}
