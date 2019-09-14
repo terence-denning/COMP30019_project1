@@ -26,7 +26,7 @@ public class CreateTerrain : MonoBehaviour
     public float size;
     public float height;
     [Range(1,10)]
-    public float colorIndex=5;
+    public float colorSmoothness=7;
 
     private float lightact;
     private float highestY = 0;
@@ -49,7 +49,7 @@ public class CreateTerrain : MonoBehaviour
     {
         MeshRenderer r = this.gameObject.GetComponent<MeshRenderer>();
         MeshFilter m = this.gameObject.GetComponent<MeshFilter>();
-        this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorIndex);
+        this.GetComponent<MeshRenderer>().material.SetFloat("ColorIndex",colorSmoothness);
         r.material.SetColor("_PointLightColor", this.pointLight.color);
         r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
         lightact = GameObject.Find("Sun").GetComponent<SunRotation>().lightactive;

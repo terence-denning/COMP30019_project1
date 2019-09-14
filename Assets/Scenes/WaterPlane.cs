@@ -5,16 +5,14 @@ using System.Collections.Generic;
 public class WaterPlane : MonoBehaviour
 {
     public Shader shader;
-    //public Shader phoneshader;
+    public float wavespeed;
+    public float wavereduct =2 ;
     public PointLight pointLight;
     public float yloc;
-
     public int xSize, zSize;
     private Vector3[] vertices;
     private Mesh mesh;
-    //public Texture tex;
-    public float wavespeed;
-    public float wavereduct =2 ;
+    private float lightact;
     Mesh  CreateMesh()
     {
         GetComponent<MeshFilter>().mesh = mesh;
@@ -23,8 +21,6 @@ public class WaterPlane : MonoBehaviour
         int i = 0;
         //Size of Plane;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        //Define UV;
-       // Vector2[] uv = new Vector2[vertices.Length];
         //tangent;
         Vector4[] tangents = new Vector4[vertices.Length];
         Vector4 tangent = new Vector4(1f, 0f, 0f, -1f);
@@ -37,8 +33,7 @@ public class WaterPlane : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                vertices[i] = new Vector3(x-offsetX,0, y-offsetZ);
-               // uv[i] = new Vector2((float)x / xSize,(float) y / zSize);
+                vertices[i] = new Vector3(x - offsetX, 0, y - offsetZ);
                 tangents[i] = tangent;
                 i++;
             }
@@ -68,7 +63,6 @@ public class WaterPlane : MonoBehaviour
         }
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-       // mesh.uv = uv;
         mesh.tangents = tangents;
         
         return mesh;
@@ -83,14 +77,8 @@ public class WaterPlane : MonoBehaviour
         GetComponent<MeshCollider>().convex = true;
         renderer.material.shader = this.shader;
 
-       
-
-        //renderer.material.mainTexture = this.tex;
-        
-
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         MeshRenderer r = this.gameObject.GetComponent<MeshRenderer>();
@@ -98,10 +86,11 @@ public class WaterPlane : MonoBehaviour
         r.material.SetFloat("WaveSpeed",this.wavespeed);
         r.material.SetFloat("WaveReduct",wavereduct);
         r.material.SetColor("_PointLightColor", this.pointLight.color);
+        //Update the y axis accroding to terrain location
         r.material.SetVector("_PointLightPosition", this.pointLight.GetWorldPosition());
         yloc = GameObject.Find("Terrain").GetComponent<CreateTerrain>().averageHeight;
-        r.transform.position= new Vector3(0,yloc,0);
-        
-
+        r.transform.position = new Vector3(0, yloc, 0);
+        lightact = GameObject.Find("Sun").GetComponent<SunRotation>().lightactive;
+        r.material.SetFloat("_lightact", lightact);
     }
 }

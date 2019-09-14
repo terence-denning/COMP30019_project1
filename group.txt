@@ -1,8 +1,14 @@
 Ruiqi Dong 872975
-
+-sun rotation
+-sun shader
+-point light
+-light reflection
 
 Pengyang Yu 767573
-
+-terrain shader
+-water shader
+-water plane
+-light reflection
 
 Terence Denning 837599
 - terrain generation

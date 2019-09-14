@@ -46,7 +46,7 @@ Properties
 				vertOut o;
 				float4 worldVertex = mul(unity_ObjectToWorld, v.vertex);
 				float3 worldNormal = normalize(mul(transpose((float3x3)unity_WorldToObject), v.normal.xyz));
-				
+				//for color smoothness change
 				if( v.vertex.y > 3){
                     v.color.r = (v.vertex.y/ColorIndex);
                     v.color.b = (v.vertex.y/ColorIndex);
@@ -87,24 +87,12 @@ Properties
 				float3 R = normalize((2.0 * LdotN * interpNormal) - L);
 				specN = 0.0001;
 				float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(V, R)), specN);
-				// Using Blinn-Phong approximation:
-				//specN = 1; // We usually need a higher specular power when using Blinn-Phong
-				//float3 H = normalize(V + L);
-				//float3 spe = fAtt * _PointLightColor.rgb * Ks * pow(saturate(dot(interpNormal, H)), specN);
-				// Combine Phong illumination model components
-				float4 sunriseColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
-				float4 sunsetColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+				float4 sunColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
 				//remove the specular reflection as we donot want any shinness;
-				sunriseColor.rgb = amb.rgb + dif.rgb + spe.rgb;
-				sunsetColor.rgb = amb.rgb + dif.rgb + spe.rgb  ;
+				sunColor.rgb = amb.rgb + dif.rgb + spe.rgb;
 				//when the sun is down turn off the light;
-				sunriseColor.a = v.color.a;
-				sunsetColor.a = v.color.a;
-                if(_lightact > 0 ){
-                    return sunriseColor;
-                }else{
-                    return sunsetColor;
-                }
+				sunColor.a = v.color.a;
+                return sunColor;
 			}
 			ENDCG
 		}
